@@ -42,9 +42,9 @@ class LinebotController < ApplicationController
                               "uri": "https://r.gnavi.co.jp/a188901/map/"
                           },
                           {
-                              "type": "postback",
+                              "type": "uri",
                               "label": "電話する",
-                              "data": "050-3469-9958"
+                              "uri": "https://line.me/R/call/81/05034699958"
                           },
                           {
                               "type": "uri",
