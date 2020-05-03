@@ -39,7 +39,7 @@ class LinebotController < ApplicationController
                           {
                               "type": "uri",
                               "label": "地図を見る",
-                              "data": "https://r.gnavi.co.jp/a188901/map/"
+                              "uri": "https://r.gnavi.co.jp/a188901/map/"
                           },
                           {
                               "type": "postback",
