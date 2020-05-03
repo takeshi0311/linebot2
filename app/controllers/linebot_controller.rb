@@ -26,30 +26,30 @@ class LinebotController < ApplicationController
                 "type": "carousel",
                 "columns": [
                     {
-                      "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
+                      "thumbnailImageUrl": "https://rimage.gnst.jp/rest/img/p70mjp8z0000/t_0op3.jpg?t=1588445234&rw=212&rh=212&q=80",
                       "imageBackgroundColor": "#FFFFFF",
-                      "title": "this is menu",
-                      "text": "description",
+                      "title": "大人の隠れ家個室 土間土間 池袋西口駅前店",
+                      "text": "ＪＲ池袋駅西口 徒歩1分",
                       "defaultAction": {
                           "type": "uri",
                           "label": "View detail",
-                          "uri": "http://example.com/page/123"
+                          "uri": "https://r.gnavi.co.jp/a188901/"
                       },
                       "actions": [
                           {
-                              "type": "postback",
-                              "label": "Buy",
-                              "data": "action=buy&itemid=111"
+                              "type": "uri",
+                              "label": "地図を見る",
+                              "data": "https://r.gnavi.co.jp/a188901/map/"
                           },
                           {
                               "type": "postback",
-                              "label": "Add to cart",
-                              "data": "action=add&itemid=111"
+                              "label": "電話する",
+                              "data": "050-3469-9958"
                           },
                           {
                               "type": "uri",
-                              "label": "View detail",
-                              "uri": "http://example.com/page/111"
+                              "label": "詳しく見る",
+                              "uri": "https://r.gnavi.co.jp/a188901/"
                           }
                       ]
                     },
