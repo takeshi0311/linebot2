@@ -143,7 +143,8 @@ class LinebotController < ApplicationController
           result = JSON.parse(json)
           #配列の形で検索結果が@restsに格納される
           @rests=result["rest"]
-          @restaurant = @rests[0]
+          # @restaurant = @rests[0]
+          @restaurant = @rests.sample
 
           colums = []
 
