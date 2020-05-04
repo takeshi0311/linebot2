@@ -163,7 +163,7 @@ class LinebotController < ApplicationController
             #電話番号の取得
             tel      = "https://line.me/R/call/81/#{rest["tel"]}"
             
-            colums << search_rest(ImageURL, title, text, uri, map, tel)
+          search_rest(ImageURL, title, text, uri, map, tel)
           # else
           #   return colums
           # end
@@ -224,6 +224,7 @@ class LinebotController < ApplicationController
           }
       ]
     }
-    return rest_detail
+    colums << rest_detail
+    # return rest_detail
   end
 end
