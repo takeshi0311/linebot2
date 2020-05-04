@@ -155,15 +155,15 @@ class LinebotController < ApplicationController
             #お店のタイトルの取得
             title    = "#{rest["name"]}"
             #お店のPR文の取得
-            text     = "#{rest["pr"]["pr_short"]}"
+            pr     = "#{rest["pr"]["pr_short"]}"
             #お店の検索URLの取得
             uri      = "#{rest["url_mobile"]}"
             #お店の地図を取得
-            map      = "#{rest["address"]}"
+            shopmap      = "#{rest["address"]}"
             #電話番号の取得
             tel      = "https://line.me/R/call/81/#{rest["tel"]}"
             
-          search_rest(ImageURL, title, text, uri, map, tel)
+          search_rest(ImageURL, title, pr, uri, shopmap, tel)
           # else
           #   return colums
           # end
