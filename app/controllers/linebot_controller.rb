@@ -36,30 +36,30 @@ class LinebotController < ApplicationController
                 "type": "carousel",
                 "columns": [
                     {
-                      "thumbnailImageUrl": "rest[:image_url]",
+                      "thumbnailImageUrl": "#{rest[:image_url]}",
                       "imageBackgroundColor": "#FFFFFF",
-                      "title": "rest[:name]",
-                      "text": "rest[:adress]",
+                      "title": "#{rest[:name]}",
+                      "text": "#{rest[:adress]}",
                       "defaultAction": {
                           "type": "uri",
                           "label": "View detail",
-                          "uri": "rest[:url]"
+                          "uri": "#{rest[:url]}"
                       },
                       "actions": [
                           {
                               "type": "uri",
                               "label": "地図を見る",
-                              "uri": "rest[:adress]"
+                              "uri": "#{rest[:adress]}"
                           },
                           {
                               "type": "uri",
                               "label": "電話する",
-                              "uri": "https://line.me/R/call/81/rest[:tel]"
+                              "uri": "https://line.me/R/call/81/#{rest[:tel]}"
                           },
                           {
                               "type": "uri",
                               "label": "詳しく見る",
-                              "uri": "rest[:url]"
+                              "uri": "#{rest[:url]}"
                           }
                       ]
                     },
