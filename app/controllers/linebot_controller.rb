@@ -95,10 +95,6 @@ class LinebotController < ApplicationController
                 "imageAspectRatio": "rectangle",
                 "imageSize": "cover"
             }
-          },{
-            type: 'text',
-            text: "#{seed1} × #{seed2} !!"
-          }]
           client.reply_message(event['replyToken'], message)
         end
         end
@@ -113,10 +109,5 @@ class LinebotController < ApplicationController
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
-  end
-  def select_word
-    # この中を変えると返ってくるキーワードが変わる
-    seeds = ["コロナ", "タケシ", "ネックレス", "結婚"]
-    seeds.sample
   end
 end
