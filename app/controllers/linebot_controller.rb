@@ -66,8 +66,8 @@ class LinebotController < ApplicationController
   #                     "actions": [
   #                         {
   #                             "type": "postback",
-  #                             "label": "Buy",
-  #                             "data": "action=buy&itemid=222"
+  #                             "label": "地図を見る",
+  #                             "data": "action=地図を見る&itemid=222"
   #                         },
   #                         {
   #                             "type": "postback",
@@ -224,17 +224,17 @@ class LinebotController < ApplicationController
                       "actions": [
                           {
                               "type": "postback",
-                              "label": "Buy",
+                              "label": "地図を見る",
                               "data": "#{@restaurant[0]["address"]}"
                           },
                           {
                               "type": "postback",
-                              "label": "Add to cart",
+                              "label": "電話をする",
                               "data": "https://line.me/R/call/81/#{@restaurant[0]["tel"]}"
                           },
                           {
                               "type": "uri",
-                              "label": "View detail",
+                              "label": "詳しく見る",
                               "uri": "#{@restaurant[0]["url_mobile"]}"
                           }
                       ]
@@ -252,17 +252,17 @@ class LinebotController < ApplicationController
                       "actions": [
                           {
                               "type": "postback",
-                              "label": "Buy",
+                              "label": "地図を見る",
                               "data": "#{@restaurant[1]["address"]}"
                           },
                           {
                               "type": "postback",
-                              "label": "Add to cart",
+                              "label": "電話をする",
                               "data": "https://line.me/R/call/81/#{@restaurant[1]["tel"]}"
                           },
                           {
                               "type": "uri",
-                              "label": "View detail",
+                              "label": "詳しく見る",
                               "uri": "#{@restaurant[1]["url_mobile"]}"
                           }
                       ]
@@ -280,17 +280,17 @@ class LinebotController < ApplicationController
                       "actions": [
                           {
                               "type": "postback",
-                              "label": "Buy",
+                              "label": "地図を見る",
                               "data": "#{@restaurant[2]["address"]}"
                           },
                           {
                               "type": "postback",
-                              "label": "Add to cart",
+                              "label": "電話をする",
                               "data": "https://line.me/R/call/81/#{@restaurant[2]["tel"]}"
                           },
                           {
                               "type": "uri",
-                              "label": "View detail",
+                              "label": "詳しく見る",
                               "uri": "#{@restaurant[2]["url_mobile"]}"
                           }
                       ]
@@ -308,17 +308,17 @@ class LinebotController < ApplicationController
                       "actions": [
                           {
                               "type": "postback",
-                              "label": "Buy",
+                              "label": "地図を見る",
                               "data": "#{@restaurant[3]["address"]}"
                           },
                           {
                               "type": "postback",
-                              "label": "Add to cart",
+                              "label": "電話をする",
                               "data": "https://line.me/R/call/81/#{@restaurant[3]["tel"]}"
                           },
                           {
                               "type": "uri",
-                              "label": "View detail",
+                              "label": "詳しく見る",
                               "uri": "#{@restaurant[3]["url_mobile"]}"
                           }
                       ]
@@ -336,17 +336,17 @@ class LinebotController < ApplicationController
                       "actions": [
                           {
                               "type": "postback",
-                              "label": "Buy",
+                              "label": "地図を見る",
                               "data": "#{@restaurant[4]["address"]}"
                           },
                           {
                               "type": "postback",
-                              "label": "Add to cart",
+                              "label": "電話をする",
                               "data": "https://line.me/R/call/81/#{@restaurant[4]["tel"]}"
                           },
                           {
                               "type": "uri",
-                              "label": "View detail",
+                              "label": "詳しく見る",
                               "uri": "#{@restaurant[4]["url_mobile"]}"
                           }
                       ]
