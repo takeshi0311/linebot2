@@ -26,12 +26,11 @@ class LinebotController < ApplicationController
           uri = URI.parse(url)
           json = Net::HTTP.get(uri)
           result = JSON.parse(json)
-          rests=result["rest"]
-
-        rests.each do |rest|
+          restran =result["rest"]
+          rests = restran[0]
           message = [{
             "type": "template",
-            "altText": "#{rest[:name]}",
+            "altText": "#{rests[:name]}",
             "template": {
                 "type": "carousel",
                 "columns": [
@@ -96,7 +95,6 @@ class LinebotController < ApplicationController
                 "imageSize": "cover"
             }
           client.reply_message(event['replyToken'], message)
-        end
         end
       end
     }
