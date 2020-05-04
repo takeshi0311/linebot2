@@ -124,15 +124,15 @@ class LinebotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           # ユーザーが打ったメッセージの取得
-          message = event.message['text']
+          messages = event.message['text']
           #api_keyの取得
-          api_key= Rails.application.credentials(:API_KEY)
+          api_key= Rails.application.credentials[:API_KEY]
           #レストラン検索のURL
           url ='https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid='
           #テイクアウト可
           takeout = "&takeout=1"
           #名前検索
-          name = "&name=#{message}"
+          name = "&name=#{messages}"
 
           #検索するURL
           search_url = url<<api_key<<takeout<<name
@@ -169,7 +169,7 @@ class LinebotController < ApplicationController
           # end
         end
 
-            messages = [{
+            message = [{
               "type": "template",
               "altText": "this is a carousel template",
               "template": {
