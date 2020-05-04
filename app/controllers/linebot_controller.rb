@@ -126,7 +126,7 @@ class LinebotController < ApplicationController
           # ユーザーが打ったメッセージの取得
           # message = event.message['text']
           #api_keyの取得
-          api_key= Rails.application.credentials(:api_key)
+          api_key= Rails.application.credentials(:API_KEY)
           #レストラン検索のURL
           url ='https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid='
           #テイクアウト可
