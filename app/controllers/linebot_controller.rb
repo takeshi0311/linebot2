@@ -3,9 +3,9 @@ class LinebotController < ApplicationController
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
   def callback
-    api_key= Rails.application.credentials[:api_key]
+    API_KEY= Rails.application.credentials[:API_KEY]
     url='https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid='
-    url << api_key 
+    url << API_KEY
 
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -31,7 +31,7 @@ class LinebotController < ApplicationController
         rests.each do |rest|
           message = [{
             "type": "template",
-            "altText": "rest[:name]",
+            "altText": "#{rest[:name]}",
             "template": {
                 "type": "carousel",
                 "columns": [
