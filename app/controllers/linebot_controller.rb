@@ -132,7 +132,7 @@ class LinebotController < ApplicationController
           #テイクアウト可
           takeout = "&takeout=1"
           #名前検索
-          name = "&name=#{message}}"
+          name = "&name=#{message}"
 
           #検索するURL
           search_url = url<<api_key<<takeout<<name
