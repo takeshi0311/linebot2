@@ -1,8 +1,12 @@
 class LinebotController < ApplicationController
-  require 'line/bot'
+  require 'line/bot'  
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
   def callback
+    api_key= Rails.application.credentials[:api_key]
+    url='https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid='
+    url << api_key 
+
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
@@ -14,42 +18,48 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          seed1 = select_word
-          seed2 = select_word
-          while seed1 == seed2
-            seed2 = select_word
+          if event
+            word = event
+            url << "&name=" << word #名前で検索
           end
+          url=URI.encode(url) 
+          uri = URI.parse(url)
+          json = Net::HTTP.get(uri)
+          result = JSON.parse(json)
+          rests=result["rest"]
+
+        rests.each do |rest|
           message = [{
             "type": "template",
-            "altText": "this is a carousel template",
+            "altText": "rest[:name]",
             "template": {
                 "type": "carousel",
                 "columns": [
                     {
-                      "thumbnailImageUrl": "https://rimage.gnst.jp/rest/img/p70mjp8z0000/t_0op3.jpg?t=1588445234&rw=212&rh=212&q=80",
+                      "thumbnailImageUrl": "rest[:image_url]",
                       "imageBackgroundColor": "#FFFFFF",
-                      "title": "大人の隠れ家個室 土間土間 池袋西口駅前店",
-                      "text": "ＪＲ池袋駅西口 徒歩1分",
+                      "title": "rest[:name]",
+                      "text": "rest[:adress]",
                       "defaultAction": {
                           "type": "uri",
                           "label": "View detail",
-                          "uri": "https://r.gnavi.co.jp/a188901/"
+                          "uri": "rest[:url]"
                       },
                       "actions": [
                           {
                               "type": "uri",
                               "label": "地図を見る",
-                              "uri": "https://r.gnavi.co.jp/a188901/map/"
+                              "uri": "rest[:adress]"
                           },
                           {
                               "type": "uri",
                               "label": "電話する",
-                              "uri": "https://line.me/R/call/81/05034699958"
+                              "uri": "https://line.me/R/call/81/rest[:tel]"
                           },
                           {
                               "type": "uri",
                               "label": "詳しく見る",
-                              "uri": "https://r.gnavi.co.jp/a188901/"
+                              "uri": "rest[:url]"
                           }
                       ]
                     },
@@ -91,10 +101,12 @@ class LinebotController < ApplicationController
           }]
           client.reply_message(event['replyToken'], message)
         end
+        end
       end
     }
     head :ok
   end
+
   private
   def client
     @client ||= Line::Bot::Client.new { |config|
