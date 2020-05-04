@@ -147,127 +147,126 @@ class LinebotController < ApplicationController
           @rests=result["rest"]
           # @restaurant = @rests[0]
           # @restaurant = @rests.sample
-          @restaurant = @rests.take(3) 
+          # @restaurant = @rests.take(3) 
           # @restaurant2 = @restaurant[0..5].sample
           # @restaurant3 = @restaurant[6..9].sample
 
-          # colums = []
+          colums = []
 
-          # while colums.size <= 10
           #配列を一つ一つ展開していく
-        # @restaurant.each do |rest|
-          # if colums.size <= 2
-            # #お店の画像のURLの取得
-            # imageurl = "#{rest["image_url"]["shop_image1"]}"
-            # #お店のタイトルの取得
-            # title    = "#{rest["name"]}"
-            # #お店のPR文の取得
-            # pr     = "#{rest["pr"]["pr_short"]}"
-            # #お店の検索URLの取得
-            # uri      = "#{rest["url_mobile"]}"
-            # #お店の地図を取得
-            # shopmap      = "#{rest["address"]}"
-            # #電話番号の取得
-            # tel      = "https://line.me/R/call/81/#{rest["tel"]}"
+          @rests.shuffle.first(10).each do |rest|
+            #お店の画像のURLの取得
+            imageurl = "#{rest["image_url"]["shop_image1"]}"
+            #お店のタイトルの取得
+            title    = "#{rest["name"]}"
+            #お店のPR文の取得
+            pr     = "#{rest["pr"]["pr_short"]}"
+            #お店の検索URLの取得
+            uri      = "#{rest["url_mobile"]}"
+            #お店の地図を取得
+            shopmap      = "#{rest["address"]}"
+            #電話番号の取得
+            tel      = "https://line.me/R/call/81/#{rest["tel"]}"
             
-            # rest_detail = {
-            #   "thumbnailImageUrl": imageurl,
-            #   "imageBackgroundColor": "#FFFFFF",
-            #   "title": title,
-            #   "text": pr,
-            #   "defaultAction": {
-            #       "type": "uri",
-            #       "label": "View detail",
-            #       "uri": uri
-            #   },
-            #   "actions": [
-            #       {
-            #           "type": "uri",
-            #           "label": "地図を見る",
-            #           "uri": shopmap
-            #       },
-            #       {
-            #           "type": "uri",
-            #           "label": "電話する",
-            #           "uri": tel
-            #       },
-            #       {
-            #           "type": "uri",
-            #           "label": "詳しく見る",
-            #           "uri": pr
-            #       }
-            #   ]
-            # }
-            # colums<<rest_detail
-            # search_rest(ImageURL, title, pr, uri, shopmap, tel)
+            rest_detail = {
+              "thumbnailImageUrl": imageurl,
+              "imageBackgroundColor": "#FFFFFF",
+              "title": title,
+              "text": pr,
+              "defaultAction": {
+                  "type": "uri",
+                  "label": "View detail",
+                  "uri": uri
+              },
+              "actions": [
+                  {
+                      "type": "uri",
+                      "label": "地図を見る",
+                      "uri": shopmap
+                  },
+                  {
+                      "type": "uri",
+                      "label": "電話する",
+                      "uri": tel
+                  },
+                  {
+                      "type": "uri",
+                      "label": "詳しく見る",
+                      "uri": pr
+                  }
+              ]
+            }
+            colums<<rest_detail
+          #   search_rest(ImageURL, title, pr, uri, shopmap, tel)
           # else
           #   return colums
           # end
-        # end
+        end
 
             message = [{
               "type": "template",
               "altText": "this is a carousel template",
               "template": {
                   "type": "carousel",
-                  "columns": [
-                    {
-                      "thumbnailImageUrl": "#{@restaurant[0]["image_url"]["shop_image1"]}",
-                      "imageBackgroundColor": "#FFFFFF",
-                      "title": "#{@restaurant[0]["name"]}",
-                      "text": "#{@restaurant[0]["pr"]["pr_short"]}",
-                      "defaultAction": {
-                          "type": "uri",
-                          "label": "View detail",
-                          "uri": "#{@restaurant[0]["url_mobile"]}"
-                      },
-                      "actions": [
-                          {
-                              "type": "postback",
-                              "label": "Buy",
-                              "data": "#{@restaurant[0]["address"]}"
-                          },
-                          {
-                              "type": "postback",
-                              "label": "Add to cart",
-                              "data": "https://line.me/R/call/81/#{@restaurant[0]["tel"]}"
-                          },
-                          {
-                              "type": "uri",
-                              "label": "View detail",
-                              "uri": "#{@restaurant[0]["url_mobile"]}"
-                          }
-                      ]
-                    },
-                    {
-                      "thumbnailImageUrl": "#{@restaurant[1]["image_url"]["shop_image1"]}",
-                      "imageBackgroundColor": "#FFFFFF",
-                      "title": "#{@restaurant[1]["name"]}",
-                      "text": "#{@restaurant[1]["pr"]["pr_short"]}",
-                      "defaultAction": {
-                          "type": "uri",
-                          "label": "View detail",
-                          "uri": "#{@restaurant[1]["url_mobile"]}"
-                      },
-                      "actions": [
-                          {
-                              "type": "postback",
-                              "label": "Buy",
-                              "data": "#{@restaurant[1]["address"]}"
-                          },
-                          {
-                              "type": "postback",
-                              "label": "Add to cart",
-                              "data": "https://line.me/R/call/81/#{@restaurant[1]["tel"]}"
-                          },
-                          {
-                              "type": "uri",
-                              "label": "View detail",
-                              "uri": "#{@restaurant[1]["url_mobile"]}"
-                          }
-                      ]
-                    }
-                ],
+                  "columns": colums,
+                #    [
+                #     {
+                #       "thumbnailImageUrl": "#{@restaurant[0]["image_url"]["shop_image1"]}",
+                #       "imageBackgroundColor": "#FFFFFF",
+                #       "title": "#{@restaurant[0]["name"]}",
+                #       "text": "#{@restaurant[0]["pr"]["pr_short"]}",
+                #       "defaultAction": {
+                #           "type": "uri",
+                #           "label": "View detail",
+                #           "uri": "#{@restaurant[0]["url_mobile"]}"
+                #       },
+                #       "actions": [
+                #           {
+                #               "type": "postback",
+                #               "label": "Buy",
+                #               "data": "#{@restaurant[0]["address"]}"
+                #           },
+                #           {
+                #               "type": "postback",
+                #               "label": "Add to cart",
+                #               "data": "https://line.me/R/call/81/#{@restaurant[0]["tel"]}"
+                #           },
+                #           {
+                #               "type": "uri",
+                #               "label": "View detail",
+                #               "uri": "#{@restaurant[0]["url_mobile"]}"
+                #           }
+                #       ]
+                #     },
+                #     {
+                #       "thumbnailImageUrl": "#{@restaurant[1]["image_url"]["shop_image1"]}",
+                #       "imageBackgroundColor": "#FFFFFF",
+                #       "title": "#{@restaurant[1]["name"]}",
+                #       "text": "#{@restaurant[1]["pr"]["pr_short"]}",
+                #       "defaultAction": {
+                #           "type": "uri",
+                #           "label": "View detail",
+                #           "uri": "#{@restaurant[1]["url_mobile"]}"
+                #       },
+                #       "actions": [
+                #           {
+                #               "type": "postback",
+                #               "label": "Buy",
+                #               "data": "#{@restaurant[1]["address"]}"
+                #           },
+                #           {
+                #               "type": "postback",
+                #               "label": "Add to cart",
+                #               "data": "https://line.me/R/call/81/#{@restaurant[1]["tel"]}"
+                #           },
+                #           {
+                #               "type": "uri",
+                #               "label": "View detail",
+                #               "uri": "#{@restaurant[1]["url_mobile"]}"
+                #           }
+                #       ]
+                #     }
+                # ],
                   "imageAspectRatio": "rectangle",
                   "imageSize": "cover"
               }
