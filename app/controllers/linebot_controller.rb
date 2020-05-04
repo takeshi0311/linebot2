@@ -151,7 +151,7 @@ class LinebotController < ApplicationController
         @rests.each do |rest|
           # if colums.size <= 10
             #お店の画像のURLの取得
-            ImageURL = "#{rest["image_url"]["shop_image1"]}"
+            imageurl = "#{rest["image_url"]["shop_image1"]}"
             #お店のタイトルの取得
             title    = "#{rest["name"]}"
             #お店のPR文の取得
@@ -164,7 +164,7 @@ class LinebotController < ApplicationController
             tel      = "https://line.me/R/call/81/#{rest["tel"]}"
             
             rest_detail = {
-              "thumbnailImageUrl": ImageURL,
+              "thumbnailImageUrl": imageurl,
               "imageBackgroundColor": "#FFFFFF",
               "title": title,
               "text": pr,
