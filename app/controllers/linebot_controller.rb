@@ -149,7 +149,7 @@ class LinebotController < ApplicationController
           # while colums.size <= 10
           #配列を一つ一つ展開していく
         @rests.each do |rest|
-          # if colums.size <= 10
+          if colums.size <= 2
             #お店の画像のURLの取得
             imageurl = "#{rest["image_url"]["shop_image1"]}"
             #お店のタイトルの取得
@@ -195,7 +195,7 @@ class LinebotController < ApplicationController
             # search_rest(ImageURL, title, pr, uri, shopmap, tel)
           # else
           #   return colums
-          # end
+          end
         end
 
             message = [{
