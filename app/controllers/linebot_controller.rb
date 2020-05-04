@@ -163,7 +163,36 @@ class LinebotController < ApplicationController
             #電話番号の取得
             tel      = "https://line.me/R/call/81/#{rest["tel"]}"
             
-          search_rest(ImageURL, title, pr, uri, shopmap, tel)
+            rest_detail = {
+              "thumbnailImageUrl": ImageURL,
+              "imageBackgroundColor": "#FFFFFF",
+              "title": title,
+              "text": pr,
+              "defaultAction": {
+                  "type": "uri",
+                  "label": "View detail",
+                  "uri": uri
+              },
+              "actions": [
+                  {
+                      "type": "uri",
+                      "label": "地図を見る",
+                      "uri": map
+                  },
+                  {
+                      "type": "uri",
+                      "label": "電話する",
+                      "uri": tel
+                  },
+                  {
+                      "type": "uri",
+                      "label": "詳しく見る",
+                      "uri": pr
+                  }
+              ]
+            }
+            colums<<rest_detail
+            # search_rest(ImageURL, title, pr, uri, shopmap, tel)
           # else
           #   return colums
           # end
@@ -195,36 +224,35 @@ class LinebotController < ApplicationController
     }
   end
 
-  def search_rest(ImageURL, title, text, uri, map, tel)
-    rest_detail = {
-      "thumbnailImageUrl": ImageURL,
-      "imageBackgroundColor": "#FFFFFF",
-      "title": title,
-      "text": text,
-      "defaultAction": {
-          "type": "uri",
-          "label": "View detail",
-          "uri": uri
-      },
-      "actions": [
-          {
-              "type": "uri",
-              "label": "地図を見る",
-              "uri": map
-          },
-          {
-              "type": "uri",
-              "label": "電話する",
-              "uri": tel
-          },
-          {
-              "type": "uri",
-              "label": "詳しく見る",
-              "uri": uri
-          }
-      ]
-    }
-    colums << rest_detail
-    # return rest_detail
-  end
+  # def search_rest(ImageURL, title, text, uri, map, tel)
+  #   rest_detail = {
+  #     "thumbnailImageUrl": ImageURL,
+  #     "imageBackgroundColor": "#FFFFFF",
+  #     "title": title,
+  #     "text": text,
+  #     "defaultAction": {
+  #         "type": "uri",
+  #         "label": "View detail",
+  #         "uri": uri
+  #     },
+  #     "actions": [
+  #         {
+  #             "type": "uri",
+  #             "label": "地図を見る",
+  #             "uri": map
+  #         },
+  #         {
+  #             "type": "uri",
+  #             "label": "電話する",
+  #             "uri": tel
+  #         },
+  #         {
+  #             "type": "uri",
+  #             "label": "詳しく見る",
+  #             "uri": uri
+  #         }
+  #     ]
+  #   }
+  #   colums << rest_detail
+  # end
 end
