@@ -177,7 +177,7 @@ class LinebotController < ApplicationController
                   {
                       "type": "uri",
                       "label": "地図を見る",
-                      "uri": map
+                      "uri": shopmap
                   },
                   {
                       "type": "uri",
