@@ -143,25 +143,26 @@ class LinebotController < ApplicationController
           result = JSON.parse(json)
           #配列の形で検索結果が@restsに格納される
           @rests=result["rest"]
+          @restaurant = @rests[0]
 
           colums = []
 
           # while colums.size <= 10
           #配列を一つ一つ展開していく
-        @rests.each do |rest|
-          if colums.size <= 2
+        # @rests.each do |rest|
+          # if colums.size <= 2
             #お店の画像のURLの取得
-            imageurl = "#{rest["image_url"]["shop_image1"]}"
+            imageurl = "#{@restaurant["image_url"]["shop_image1"]}"
             #お店のタイトルの取得
-            title    = "#{rest["name"]}"
+            title    = "#{@restaurant["name"]}"
             #お店のPR文の取得
-            pr     = "#{rest["pr"]["pr_short"]}"
+            pr     = "#{@restaurant["pr"]["pr_short"]}"
             #お店の検索URLの取得
-            uri      = "#{rest["url_mobile"]}"
+            uri      = "#{@restaurant["url_mobile"]}"
             #お店の地図を取得
-            shopmap      = "#{rest["address"]}"
+            shopmap      = "#{@restaurant["address"]}"
             #電話番号の取得
-            tel      = "https://line.me/R/call/81/#{rest["tel"]}"
+            tel      = "https://line.me/R/call/81/#{@restaurant["tel"]}"
             
             rest_detail = {
               "thumbnailImageUrl": imageurl,
@@ -195,8 +196,8 @@ class LinebotController < ApplicationController
             # search_rest(ImageURL, title, pr, uri, shopmap, tel)
           # else
           #   return colums
-          end
-        end
+          # end
+        # end
 
             message = [{
               "type": "template",
@@ -205,30 +206,30 @@ class LinebotController < ApplicationController
                   "type": "carousel",
                   "columns": [
                     {
-                      "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
+                      "thumbnailImageUrl": imageurl,
                       "imageBackgroundColor": "#FFFFFF",
-                      "title": "this is menu",
-                      "text": "description",
+                      "title": title,
+                      "text": pr,
                       "defaultAction": {
                           "type": "uri",
                           "label": "View detail",
-                          "uri": "http://example.com/page/123"
+                          "uri": uri
                       },
                       "actions": [
                           {
                               "type": "postback",
                               "label": "Buy",
-                              "data": "action=buy&itemid=111"
+                              "data": shopmap
                           },
                           {
                               "type": "postback",
                               "label": "Add to cart",
-                              "data": "action=add&itemid=111"
+                              "data": tel
                           },
                           {
                               "type": "uri",
                               "label": "View detail",
-                              "uri": "http://example.com/page/111"
+                              "uri": uri
                           }
                       ]
                     },
