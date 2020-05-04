@@ -203,7 +203,7 @@ class LinebotController < ApplicationController
               "altText": "this is a carousel template",
               "template": {
                   "type": "carousel",
-                  "columns": colums,
+                  "columns": "colums",
                   "imageAspectRatio": "rectangle",
                   "imageSize": "cover"
               }
