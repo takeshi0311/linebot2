@@ -134,6 +134,8 @@ class LinebotController < ApplicationController
           #名前検索
           name = "&freeword=#{messages}"
 
+          # https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=5900bfeb29cb8997522e224985d90e9e&takeout=1&freeword=岐阜
+
           #検索するURL
           search_url = url<<api_key<<takeout<<name
 
@@ -145,7 +147,9 @@ class LinebotController < ApplicationController
           @rests=result["rest"]
           # @restaurant = @rests[0]
           # @restaurant = @rests.sample
-          @restaurant = @rests.take(3) 
+          @restaurant = @rests.take(10) 
+          @restaurant2 = @restaurant[0..5].sample
+          @restaurant3 = @restaurant[6..9].sample
 
           # colums = []
 
@@ -208,58 +212,58 @@ class LinebotController < ApplicationController
                   "type": "carousel",
                   "columns": [
                     {
-                      "thumbnailImageUrl": "#{@restaurant[0]["image_url"]["shop_image1"]}",
+                      "thumbnailImageUrl": "#{@restaurant2["image_url"]["shop_image1"]}",
                       "imageBackgroundColor": "#FFFFFF",
-                      "title": "#{@restaurant[0]["name"]}",
-                      "text": "#{@restaurant[0]["pr"]["pr_short"]}",
+                      "title": "#{@restaurant2["name"]}",
+                      "text": "#{@restaurant2["pr"]["pr_short"]}",
                       "defaultAction": {
                           "type": "uri",
                           "label": "View detail",
-                          "uri": "#{@restaurant[0]["url_mobile"]}"
+                          "uri": "#{@restaurant2["url_mobile"]}"
                       },
                       "actions": [
                           {
                               "type": "postback",
                               "label": "Buy",
-                              "data": "#{@restaurant[0]["address"]}"
+                              "data": "#{@restaurant2["address"]}"
                           },
                           {
                               "type": "postback",
                               "label": "Add to cart",
-                              "data": "https://line.me/R/call/81/#{@restaurant[0]["tel"]}"
+                              "data": "https://line.me/R/call/81/#{@restaurant2["tel"]}"
                           },
                           {
                               "type": "uri",
                               "label": "View detail",
-                              "uri": "#{@restaurant[0]["url_mobile"]}"
+                              "uri": "#{@restaurant2["url_mobile"]}"
                           }
                       ]
                     },
                     {
-                      "thumbnailImageUrl": "#{@restaurant[1]["image_url"]["shop_image1"]}",
+                      "thumbnailImageUrl": "#{@restaurant3["image_url"]["shop_image1"]}",
                       "imageBackgroundColor": "#FFFFFF",
-                      "title": "#{@restaurant[1]["name"]}",
-                      "text": "#{@restaurant[1]["pr"]["pr_short"]}",
+                      "title": "#{@restaurant3["name"]}",
+                      "text": "#{@restaurant3["pr"]["pr_short"]}",
                       "defaultAction": {
                           "type": "uri",
                           "label": "View detail",
-                          "uri": "#{@restaurant[1]["url_mobile"]}"
+                          "uri": "#{@restaurant3["url_mobile"]}"
                       },
                       "actions": [
                           {
                               "type": "postback",
                               "label": "Buy",
-                              "data": "#{@restaurant[1]["address"]}"
+                              "data": "#{@restaurant3["address"]}"
                           },
                           {
                               "type": "postback",
                               "label": "Add to cart",
-                              "data": "https://line.me/R/call/81/#{@restaurant[1]["tel"]}"
+                              "data": "https://line.me/R/call/81/#{@restaurant3["tel"]}"
                           },
                           {
                               "type": "uri",
                               "label": "View detail",
-                              "uri": "#{@restaurant[1]["url_mobile"]}"
+                              "uri": "#{@restaurant3["url_mobile"]}"
                           }
                       ]
                     }
