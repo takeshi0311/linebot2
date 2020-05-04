@@ -1,71 +1,113 @@
 class LinebotController < ApplicationController
-  require 'line/bot'  # gem 'line-bot-api'
+  require 'line/bot'  
   # callbackアクションのCSRFトークン認証を無効
-  protect_from_forgery :except => [:callback] 
-  def client
-    @client ||= Line::Bot::Client.new { |config| 
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    } 
-  end
-
+  protect_from_forgery :except => [:callback]
   def callback
-    body = request.body.read
+    API_KEY= Rails.application.credentials[:API_KEY]
+    url='https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid='
+    url << API_KEY
 
+    body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
       error 400 do 'Bad Request' end
     end
-
     events = client.parse_events_from(body)
-
-    #ここでlineに送られたイベントを検出している
-    # messageのtext: に指定すると、返信する文字を決定することができる
-    #event.message['text']で送られたメッセージを取得することができる
     events.each { |event|
-      if event.message['text'] != nil
-        place = event.message['text'] #ここでLINEで送った文章を取得
-        result = `curl -X GET http://api.gnavi.co.jp/RestSearchAPI/20150630/?keyid='&'format=json'&'address=#{place}`#ここでぐるなびAPIを叩く
-      else
-        latitude = event.message['latitude']
-        longitude = event.message['longitude']
-
-        result = `curl -X GET http://api.gnavi.co.jp/RestSearchAPI/20150630/?keyid='&'format=json'&'latitude=#{latitude}'&'longitude=#{longitude}`#ここでぐるなびAPIを叩く
-      end
-
-      hash_result = JSON.parse result #レスポンスが文字列なのでhashにパースする
-      shops = hash_result["rest"] #ここでお店情報が入った配列となる
-      shop = shops.sample #任意のものを一個選ぶ
-
-      #店の情報
-      url = shop["url_mobile"] #サイトのURLを送る
-      shop_name = shop["name"] #店の名前
-      category = shop["category"] #カテゴリー
-      open_time = shop["opentime"] #空いている時間
-      holiday = shop["holiday"] #定休日
-
-      if open_time.class != String #空いている時間と定休日の二つは空白の時にHashで返ってくるので、文字列に直そうとするとエラーになる。そのため、クラスによる場合分け。
-        open_time = ""
-     end
-     if holiday.class != String
-        holiday = ""
-      end
-
-      response = "【店名】" + shop_name + "\n" + "【カテゴリー】" + category + "\n" + "【営業時間と定休日】" + open_time + "\n" + holiday + "\n" + url
-       case event #case文　caseの値がwhenと一致する時にwhenの中の文章が実行される(switch文みたいなもの)
+      case event
       when Line::Bot::Event::Message
         case event.type
-        when Line::Bot::Event::MessageType::Text,Line::Bot::Event::MessageType::Location
-          message = {
-            type: 'text',
-            text: response
-          }
+        when Line::Bot::Event::MessageType::Text
+          if event
+            word = event
+            url << "&name=" << word #名前で検索
+          end
+          url=URI.encode(url) 
+          uri = URI.parse(url)
+          json = Net::HTTP.get(uri)
+          result = JSON.parse(json)
+          rests=result["rest"]
+
+        rests.each do |rest|
+          message = [{
+            "type": "template",
+            "altText": "#{rest[:name]}",
+            "template": {
+                "type": "carousel",
+                "columns": [
+                    {
+                      "thumbnailImageUrl": "#{rest[:image_url]}",
+                      "imageBackgroundColor": "#FFFFFF",
+                      "title": "#{rest[:name]}",
+                      "text": "#{rest[:adress]}",
+                      "defaultAction": {
+                          "type": "uri",
+                          "label": "View detail",
+                          "uri": "#{rest[:url]}"
+                      },
+                      "actions": [
+                          {
+                              "type": "uri",
+                              "label": "地図を見る",
+                              "uri": "#{rest[:adress]}"
+                          },
+                          {
+                              "type": "uri",
+                              "label": "電話する",
+                              "uri": "https://line.me/R/call/81/#{rest[:tel]}"
+                          },
+                          {
+                              "type": "uri",
+                              "label": "詳しく見る",
+                              "uri": "#{rest[:url]}"
+                          }
+                      ]
+                    },
+                    {
+                      "thumbnailImageUrl": "https://example.com/bot/images/item2.jpg",
+                      "imageBackgroundColor": "#000000",
+                      "title": "this is menu",
+                      "text": "description",
+                      "defaultAction": {
+                          "type": "uri",
+                          "label": "View detail",
+                          "uri": "http://example.com/page/222"
+                      },
+                      "actions": [
+                          {
+                              "type": "postback",
+                              "label": "Buy",
+                              "data": "action=buy&itemid=222"
+                          },
+                          {
+                              "type": "postback",
+                              "label": "Add to cart",
+                              "data": "action=add&itemid=222"
+                          },
+                          {
+                              "type": "uri",
+                              "label": "View detail",
+                              "uri": "http://example.com/page/222"
+                          }
+                      ]
+                    }
+                ],
+                "imageAspectRatio": "rectangle",
+                "imageSize": "cover"
+            }
           client.reply_message(event['replyToken'], message)
         end
-
+        end
       end
-    } 
-
+    }
     head :ok
+  end
+
+  private
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
   end
 end
