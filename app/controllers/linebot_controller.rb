@@ -124,7 +124,7 @@ class LinebotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           # ユーザーが打ったメッセージの取得
-          # message = event.message['text']
+          message = event.message['text']
           #api_keyの取得
           api_key= Rails.application.credentials(:API_KEY)
           #レストラン検索のURL
@@ -132,7 +132,7 @@ class LinebotController < ApplicationController
           #テイクアウト可
           takeout = "&takeout=1"
           #名前検索
-          name = "&name=#{event}"
+          name = "&name=#{message}"
 
           #検索するURL
           search_url = url<<api_key<<takeout<<name
