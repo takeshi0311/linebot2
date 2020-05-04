@@ -137,7 +137,8 @@ class LinebotController < ApplicationController
           # https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=5900bfeb29cb8997522e224985d90e9e&takeout=1&freeword=岐阜
 
           #検索するURL
-          search_url = url<<api_key<<takeout<<name
+          # search_url = url<<api_key<<takeout<<name
+          search_url = url<<api_key<<name
 
           search_url = URI.encode(search_url) #エスケープ
           search_uri = URI.parse(search_url)
