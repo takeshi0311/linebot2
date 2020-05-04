@@ -147,54 +147,54 @@ class LinebotController < ApplicationController
           # @restaurant = @rests.sample
           @restaurant = @rests.take(3) 
 
-          colums = []
+          # colums = []
 
           # while colums.size <= 10
           #配列を一つ一つ展開していく
         # @restaurant.each do |rest|
           # if colums.size <= 2
-            #お店の画像のURLの取得
-            imageurl = "#{rest["image_url"]["shop_image1"]}"
-            #お店のタイトルの取得
-            title    = "#{rest["name"]}"
-            #お店のPR文の取得
-            pr     = "#{rest["pr"]["pr_short"]}"
-            #お店の検索URLの取得
-            uri      = "#{rest["url_mobile"]}"
-            #お店の地図を取得
-            shopmap      = "#{rest["address"]}"
-            #電話番号の取得
-            tel      = "https://line.me/R/call/81/#{rest["tel"]}"
+            # #お店の画像のURLの取得
+            # imageurl = "#{rest["image_url"]["shop_image1"]}"
+            # #お店のタイトルの取得
+            # title    = "#{rest["name"]}"
+            # #お店のPR文の取得
+            # pr     = "#{rest["pr"]["pr_short"]}"
+            # #お店の検索URLの取得
+            # uri      = "#{rest["url_mobile"]}"
+            # #お店の地図を取得
+            # shopmap      = "#{rest["address"]}"
+            # #電話番号の取得
+            # tel      = "https://line.me/R/call/81/#{rest["tel"]}"
             
-            rest_detail = {
-              "thumbnailImageUrl": imageurl,
-              "imageBackgroundColor": "#FFFFFF",
-              "title": title,
-              "text": pr,
-              "defaultAction": {
-                  "type": "uri",
-                  "label": "View detail",
-                  "uri": uri
-              },
-              "actions": [
-                  {
-                      "type": "uri",
-                      "label": "地図を見る",
-                      "uri": shopmap
-                  },
-                  {
-                      "type": "uri",
-                      "label": "電話する",
-                      "uri": tel
-                  },
-                  {
-                      "type": "uri",
-                      "label": "詳しく見る",
-                      "uri": pr
-                  }
-              ]
-            }
-            colums<<rest_detail
+            # rest_detail = {
+            #   "thumbnailImageUrl": imageurl,
+            #   "imageBackgroundColor": "#FFFFFF",
+            #   "title": title,
+            #   "text": pr,
+            #   "defaultAction": {
+            #       "type": "uri",
+            #       "label": "View detail",
+            #       "uri": uri
+            #   },
+            #   "actions": [
+            #       {
+            #           "type": "uri",
+            #           "label": "地図を見る",
+            #           "uri": shopmap
+            #       },
+            #       {
+            #           "type": "uri",
+            #           "label": "電話する",
+            #           "uri": tel
+            #       },
+            #       {
+            #           "type": "uri",
+            #           "label": "詳しく見る",
+            #           "uri": pr
+            #       }
+            #   ]
+            # }
+            # colums<<rest_detail
             # search_rest(ImageURL, title, pr, uri, shopmap, tel)
           # else
           #   return colums
