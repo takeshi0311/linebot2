@@ -134,12 +134,11 @@ class LinebotController < ApplicationController
           #名前検索
           # name = "&freeword=#{messages}"
 
-          search_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{api_key}&takeout=1&freeword=#{messages}"
-
           # https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=5900bfeb29cb8997522e224985d90e9e&takeout=1&freeword=岐阜
 
           #検索するURL
           # search_url = url<<api_key<<takeout<<name
+          search_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{api_key}&takeout=1&freeword=#{messages}"
           # search_url = url<<api_key<<name
 
           search_url = URI.encode(search_url) #エスケープ
